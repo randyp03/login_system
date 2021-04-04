@@ -66,17 +66,28 @@ def create_password():
         if correct_length and has_uppercase and has_lowercase and \
             has_digit and has_special_char:
             is_valid = True
-            print('Password is accepted')
             return password
         
         print('Invalid password. Please enter a password that ' +
                 'fits the requirements.')
 
+def reenter_password(password):
+    password2 = input('Confirm password: ')
+    if password == password2:
+        return True
+    else:
+        print('Passwords do not match. Please retry.')
+        return False
+
 # function will prompt user to enter their details to sign up
 def sign_up():
     print('Enter a username and password to sign up')
     username = create_username()
-    password = create_password()
+    do_passwords_match = False
+    while not do_passwords_match:
+        password = create_password()
+        do_passwords_match = reenter_password(password)
+    print('Password is accepted')
     f = open('login_system', 'a')
     f.write(username + ' ' + password + '\n')
     f.close()
